@@ -271,3 +271,176 @@ h1, h2, h3, h4, h5, h6 {
   outline-offset: 3px;
   border-radius: var(--radius-sm);
 }
+
+/* ─── Responsive Layout Utilities ─────────────────────────────── */
+
+/* Hero — 5-pillar grid */
+.hero-pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+@media (max-width: 900px) {
+  .hero-pillar-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .hero-pillar-grid { grid-template-columns: repeat(2, 1fr); border-radius: 14px; }
+}
+
+/* Hero — metrics bar */
+.hero-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 600px) {
+  .hero-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Hero — floating cloud icons (hide on small screens) */
+.hero-float-icon {
+  display: flex;
+}
+@media (max-width: 768px) {
+  .hero-float-icon { display: none !important; }
+}
+
+/* WhatSetsApart — bento grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1024px) {
+  .bento-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .bento-grid { grid-template-columns: 1fr; }
+}
+
+/* CTA card — span 2 rows only on desktop */
+.cta-span-rows { grid-row: span 2; }
+@media (max-width: 1024px) {
+  .cta-span-rows { grid-row: span 1; }
+}
+
+/* WhatSetsApart — header subtitle alignment */
+.wsa-subtitle {
+  text-align: right;
+  max-width: 300px;
+}
+@media (max-width: 640px) {
+  .wsa-subtitle { text-align: left; max-width: 100%; }
+}
+
+/* FeatureTabs — outer layout (sidebar + content) */
+.feature-tab-outer {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 20px;
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  .feature-tab-outer { grid-template-columns: 1fr; }
+}
+
+/* FeatureTabs — left sidebar */
+.feature-tab-sidebar {
+  background: var(--color-bg-elevated);
+  border-right: 1px solid var(--color-border-faint);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+@media (max-width: 900px) {
+  .feature-tab-sidebar {
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-faint);
+    overflow-x: auto;
+    padding: 10px 12px;
+    gap: 6px;
+    scrollbar-width: none;
+  }
+  .feature-tab-sidebar::-webkit-scrollbar { display: none; }
+}
+
+/* FeatureTabs — tab button mobile compact */
+@media (max-width: 900px) {
+  .feature-tab-btn {
+    white-space: nowrap;
+    border-left: none !important;
+    border-bottom: 3px solid transparent;
+    flex-shrink: 0;
+  }
+  .feature-tab-btn.active-tab {
+    border-bottom-color: var(--active-color, #F59E0B);
+    border-left: none !important;
+  }
+}
+
+/* FeatureTabs — content grid (text + image) */
+.feature-tab-content {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  align-items: stretch;
+}
+@media (max-width: 1024px) {
+  .feature-tab-content { grid-template-columns: 1fr; }
+}
+
+/* FeatureTabs — image column */
+.feature-tab-image {
+  border-left: 1px solid var(--color-border-faint);
+  overflow: hidden;
+  position: relative;
+  width: 380px;
+  flex-shrink: 0;
+  height: 480px;
+}
+@media (max-width: 1024px) {
+  .feature-tab-image { display: none; }
+}
+
+/* Integrations — cloud partners row */
+.cloud-partners-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+@media (max-width: 640px) {
+  .cloud-partners-row { flex-direction: column; }
+}
+
+/* Footer — main grid */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 260px repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: 4rem;
+}
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+}
+
+/* Footer — bottom bar */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+@media (max-width: 640px) {
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .footer-bottom-links { flex-wrap: wrap; gap: 12px 16px; }
+}

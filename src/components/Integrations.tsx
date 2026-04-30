@@ -143,7 +143,7 @@ export default function Integrations() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          style={{ display: 'flex', gap: '16px', marginBottom: '24px' }}
+          className="cloud-partners-row"
         >
           {cloudPartners.map(p => (
             <CloudLogo key={p.name} {...p} />

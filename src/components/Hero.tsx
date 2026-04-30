@@ -169,13 +169,7 @@ export default function Hero() {
         </div>
 
         {/* 5-column card grid */}
-        <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)',
-          border: '1px solid rgba(255,255,255,0.08)',
-          borderRadius: '20px', overflow: 'hidden',
-          background: 'rgba(0,0,0,0.4)',
-          backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
-        }}>
+        <div className="hero-pillar-grid">
           {pillars.map((p, i) => (
             <motion.div
               key={p.id}
@@ -303,6 +297,7 @@ export default function Hero() {
           ].map((icon, i) => (
             <motion.div
               key={i}
+              className="hero-float-icon"
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: 'easeInOut', delay: icon.delay }}
               style={{
@@ -310,7 +305,7 @@ export default function Hero() {
                 top: icon.top, bottom: (icon as any).bottom,
                 left: icon.left, right: (icon as any).right,
                 width: '64px', height: '64px',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                alignItems: 'center', justifyContent: 'center',
                 zIndex: 10,
               }}
             >
@@ -351,9 +346,8 @@ export default function Hero() {
           padding: '3rem clamp(1.5rem, 5vw, 4rem) 5rem',
         }}
       >
-        <div style={{
+        <div className="hero-metrics-grid" style={{
           width: '100%', maxWidth: '780px',
-          display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
           borderRadius: '16px',
           border: '1px solid rgba(255,255,255,0.11)',
           overflow: 'hidden',

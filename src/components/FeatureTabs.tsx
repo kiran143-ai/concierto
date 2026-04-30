@@ -154,15 +154,10 @@ export default function FeatureTabs() {
         </motion.div>
 
         {/* Tab layout */}
-        <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '0', border: '1px solid var(--color-border-subtle)', borderRadius: '20px', overflow: 'hidden' }}>
+        <div className="feature-tab-outer">
 
           {/* Left tab list */}
-          <div style={{
-            background: 'var(--color-bg-elevated)',
-            borderRight: '1px solid var(--color-border-faint)',
-            padding: '12px',
-            display: 'flex', flexDirection: 'column', gap: '4px',
-          }}>
+          <div className="feature-tab-sidebar">
             {tabs.map(tab => (
               <button
                 key={tab.id}
@@ -204,7 +199,7 @@ export default function FeatureTabs() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 380px', alignItems: 'stretch' }}
+                className="feature-tab-content" style={{ flex: 1 }}
               >
                 {/* Text column */}
                 <div style={{ padding: '40px 44px', position: 'relative' }}>
@@ -297,14 +292,7 @@ export default function FeatureTabs() {
                 </div>
 
                 {/* Image column */}
-                <div style={{
-                  borderLeft: '1px solid var(--color-border-faint)',
-                  overflow: 'hidden',
-                  position: 'relative',
-                  width: '380px',
-                  flexShrink: 0,
-                  height: '480px',
-                }}>
+                <div className="feature-tab-image">
                   <motion.img
                     src={current.image}
                     alt={current.heading}

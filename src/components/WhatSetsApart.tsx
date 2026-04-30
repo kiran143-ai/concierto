@@ -342,14 +342,14 @@ export default function WhatSetsApart() {
               What sets Concierto apart
             </h2>
           </div>
-          <p style={{ fontFamily: 'var(--font-body)', fontSize: '1rem', lineHeight: 1.6, color: 'var(--color-text-muted)', maxWidth: '300px', textAlign: 'right' }}>
+          <p className="wsa-subtitle" style={{ fontFamily: 'var(--font-body)', fontSize: '1rem', lineHeight: 1.6, color: 'var(--color-text-muted)' }}>
             Faster, smarter, and more unified than traditional cloud transformation tools.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+        <div className="bento-grid">
           <BentoCard card={cards[0]} delay={0} />
           <BentoCard card={cards[1]} delay={0.1} />
-          <div style={{ gridRow: 'span 2' }}><CTACard /></div>
+          <div className="cta-span-rows"><CTACard /></div>
           <BentoCard card={cards[2]} delay={0.2} />
           <BentoCard card={cards[3]} delay={0.3} />
         </div>

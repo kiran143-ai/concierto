@@ -17,7 +17,7 @@ export default function Footer() {
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
 
         {/* Top: logo + links */}
-        <div style={{ display: 'grid', gridTemplateColumns: '260px repeat(4, 1fr)', gap: '40px', marginBottom: '4rem' }}>
+        <div className="footer-grid">
 
           {/* Brand column */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -89,11 +89,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div style={{
+        <div className="footer-bottom" style={{
           borderTop: '1px solid var(--color-border-faint)',
           padding: '20px 0 24px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          flexWrap: 'wrap', gap: '12px',
         }}>
           <span style={{
             fontFamily: 'var(--font-body)', fontSize: '0.8125rem',
@@ -102,7 +100,7 @@ export default function Footer() {
             © 2026 Concierto Cloud, Inc. All rights reserved.
           </span>
 
-          <div style={{ display: 'flex', gap: '24px' }}>
+          <div className="footer-bottom-links" style={{ display: 'flex', gap: '24px' }}>
             {['Disclaimer', 'Terms of Use', 'Privacy Policy', 'Cookie Policy'].map(item => (
               <a
                 key={item}
