@@ -71,7 +71,7 @@ export default function Testimonials() {
         </motion.div>
 
         {/* Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+        <div className="testimonials-grid">
           {testimonials.map((t, i) => (
             <motion.div
               key={t.name}

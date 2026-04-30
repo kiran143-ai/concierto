@@ -202,7 +202,7 @@ export default function FeatureTabs() {
                 className="feature-tab-content" style={{ flex: 1 }}
               >
                 {/* Text column */}
-                <div style={{ padding: '40px 44px', position: 'relative' }}>
+                <div className="feature-tab-text">
                   {/* Accent glow */}
                   <div style={{
                     position: 'absolute', top: '-60px', right: '-60px',

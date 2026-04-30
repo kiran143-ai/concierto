@@ -174,8 +174,8 @@ export default function Hero() {
             <motion.div
               key={p.id}
               whileHover={{ background: 'rgba(255,255,255,0.06)' }}
+              className="hero-pillar-card"
               style={{
-                padding: '28px 22px',
                 background: 'rgba(255,255,255,0.02)',
                 borderRight: i < pillars.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
                 display: 'flex', flexDirection: 'column', gap: '12px',
@@ -183,22 +183,22 @@ export default function Hero() {
               }}
             >
               <span style={{ fontSize: '1.5rem', lineHeight: 1 }}>{p.emoji}</span>
-              <span style={{
-                fontFamily: 'var(--font-body)', fontSize: '0.625rem', fontWeight: 700,
+              <span className="hero-pillar-label" style={{
+                fontFamily: 'var(--font-body)', fontWeight: 700,
                 letterSpacing: '0.14em', textTransform: 'uppercase', color: p.color,
               }}>
                 {p.label}
               </span>
-              <p style={{
-                fontFamily: 'var(--font-heading)', fontSize: '0.9375rem', fontWeight: 700,
-                lineHeight: 1.3, color: '#FFFFFF', margin: 0, flex: 1,
+              <p className="hero-pillar-title" style={{
+                fontFamily: 'var(--font-heading)',
               }}>
                 {p.title}
               </p>
               <a
                 href="#"
+                className="hero-pillar-cta"
                 style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  alignItems: 'center', gap: '6px',
                   fontFamily: 'var(--font-body)', fontSize: '0.75rem', fontWeight: 600,
                   color: p.color, textDecoration: 'none', transition: 'gap 200ms ease',
                 }}
@@ -221,7 +221,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '16px', marginTop: '2rem' }}
+          style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '12px', marginTop: '2rem' }}
         >
           <motion.a
             href="#"
