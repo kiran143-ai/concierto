@@ -131,10 +131,28 @@ export default function Hero() {
           fontSize: 'clamp(0.9rem, 1.4vw, 1.05rem)',
           fontWeight: 500, lineHeight: 1.7,
           color: 'rgba(255,255,255,0.55)',
-          marginBottom: '2.5rem', letterSpacing: '0.01em',
+          marginBottom: '1.5rem', letterSpacing: '0.01em',
         }}>
           Multi-Cloud &nbsp;·&nbsp; Multi-Lingual &nbsp;·&nbsp; AI-Powered
         </motion.p>
+
+        {/* Request a Brief — mobile only, shown below heading */}
+        <motion.div {...fadeUp(0.18)} className="flex lg:hidden" style={{ marginBottom: '2rem' }}>
+          <a
+            href="#"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              padding: '12px 28px', borderRadius: '9999px',
+              fontFamily: 'var(--font-body)', fontSize: '0.9375rem', fontWeight: 600,
+              background: '#F59E0B', color: '#000000',
+              textDecoration: 'none',
+              boxShadow: '0 0 20px rgba(245,158,11,0.4)',
+              letterSpacing: '-0.01em',
+            }}
+          >
+            Request a Brief
+          </a>
+        </motion.div>
 
       </div>
 

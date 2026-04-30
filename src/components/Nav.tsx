@@ -166,13 +166,13 @@ export default function Nav() {
 
           {/* ── Right actions ── */}
           <div className="flex items-center gap-2.5">
-            {/* Get Started — solid amber pill button */}
+            {/* Request a Brief — hidden on mobile, visible on desktop */}
             <motion.a
               href="#"
               whileHover={{ scale: 1.04, boxShadow: '0 0 28px rgba(245,158,11,0.6)' }}
               whileTap={{ scale: 0.96 }}
+              className="hidden lg:flex"
               style={{
-                display: 'flex',
                 alignItems: 'center', gap: '6px',
                 padding: '9px 22px', borderRadius: '9999px',
                 fontFamily: 'var(--font-body)',
@@ -209,15 +209,17 @@ export default function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed top-16 left-4 right-4 z-[99] rounded-2xl py-4"
+            className="fixed top-16 left-3 right-3 z-[99] rounded-2xl"
             style={{
               background: 'rgba(5, 5, 12, 0.97)',
               border: '1px solid rgba(255,255,255,0.1)',
               backdropFilter: 'blur(24px)',
               boxShadow: '0 20px 60px rgba(0,0,0,0.6)',
+              padding: '8px 12px 16px',
             }}
           >
-            <div className="px-4 flex flex-col gap-0.5">
+            {/* Nav links */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.label}
@@ -225,22 +227,51 @@ export default function Nav() {
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.04 }}
-                  className="py-2.5 px-3 rounded-xl text-sm font-medium"
-                  style={{ color: 'rgba(255,255,255,0.65)', fontFamily: 'var(--font-body)' }}
+                  style={{
+                    display: 'block',
+                    padding: '13px 14px',
+                    borderRadius: '10px',
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.9375rem',
+                    fontWeight: 500,
+                    lineHeight: 1.4,
+                    color: 'rgba(255,255,255,0.7)',
+                    textDecoration: 'none',
+                    borderBottom: i < navLinks.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                    transition: 'color 150ms ease, background 150ms ease',
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.color = '#fff'
+                    ;(e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)'
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.7)'
+                    ;(e.currentTarget as HTMLElement).style.background = 'transparent'
+                  }}
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}
                 </motion.a>
               ))}
+            </div>
+
+            {/* CTA buttons */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
               <motion.a
                 href="#"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: navLinks.length * 0.04 }}
-                className="mt-3 flex items-center justify-center py-2.5 rounded-full text-sm font-semibold"
-                style={{ background: '#fff', color: '#000', fontFamily: 'var(--font-body)' }}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  padding: '13px 20px', borderRadius: '9999px',
+                  fontFamily: 'var(--font-body)', fontSize: '0.9375rem', fontWeight: 600,
+                  background: '#F59E0B', color: '#000',
+                  textDecoration: 'none', lineHeight: 1.4,
+                  boxShadow: '0 0 16px rgba(245,158,11,0.3)',
+                }}
               >
-                Get Started
+                Request a Brief
               </motion.a>
             </div>
           </motion.div>
