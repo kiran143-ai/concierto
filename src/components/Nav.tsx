@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Menu, X, Sun, Moon } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
@@ -16,6 +16,15 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const openDropdown = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    setActiveDropdown(label)
+  }
+  const closeDropdown = () => {
+    closeTimer.current = setTimeout(() => setActiveDropdown(null), 120)
+  }
   const { theme, toggleTheme } = useTheme()
   const isLight = theme === 'light'
 
@@ -107,8 +116,8 @@ export default function Nav() {
                 <div
                   key={link.label}
                   style={{ position: 'relative' }}
-                  onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.label)}
-                  onMouseLeave={() => setActiveDropdown(null)}
+                  onMouseEnter={() => link.hasDropdown && openDropdown(link.label)}
+                  onMouseLeave={() => link.hasDropdown && closeDropdown()}
                 >
                   <button
                     style={{
@@ -136,6 +145,14 @@ export default function Nav() {
                     )}
                   </button>
 
+                  {/* Invisible bridge covers the gap so mouse-leave doesn't fire mid-travel */}
+                  {link.hasDropdown && activeDropdown === link.label && (
+                    <div style={{
+                      position: 'absolute', top: '100%', left: 0, right: 0,
+                      height: '12px', background: 'transparent',
+                    }} />
+                  )}
+
                   <AnimatePresence>
                     {link.hasDropdown && activeDropdown === link.label && (
                       <motion.div
@@ -143,9 +160,11 @@ export default function Nav() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.96 }}
                         transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                        onMouseEnter={() => openDropdown(link.label)}
+                        onMouseLeave={closeDropdown}
                         style={{
                           position: 'absolute',
-                          top: 'calc(100% + 12px)',
+                          top: 'calc(100% + 8px)',
                           left: '50%',
                           transform: 'translateX(-50%)',
                           minWidth: '220px',
