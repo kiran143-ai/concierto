@@ -305,7 +305,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── Responsive Layout Utilities ─────────────────────────────── */
 
 /* Global: prevent horizontal overflow */
-section, footer, header { overflow-x: hidden; }
+section, footer { overflow-x: hidden; }
 
 
 /* Hero — 5-pillar grid */
