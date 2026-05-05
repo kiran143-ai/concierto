@@ -24,10 +24,11 @@ function CloudLogo({ name, color, abbr }: { name: string; color: string; abbr: s
       style={{
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px',
         padding: '28px 32px', borderRadius: '20px',
-        background: 'rgba(255,255,255,0.03)',
+        background: 'var(--color-bg-card)',
         border: `1px solid ${color}25`,
+        boxShadow: 'var(--shadow-card)',
         flex: 1, cursor: 'default',
-        transition: 'border-color 250ms ease',
+        transition: 'border-color 250ms ease, box-shadow 250ms ease',
       }}
       onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `${color}50` }}
       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `${color}25` }}
@@ -43,7 +44,7 @@ function CloudLogo({ name, color, abbr }: { name: string; color: string; abbr: s
       </div>
       <span style={{
         fontFamily: 'var(--font-body)', fontSize: '0.875rem', fontWeight: 600,
-        color: 'rgba(255,255,255,0.7)',
+        color: 'var(--color-text-secondary)',
       }}>
         {name}
       </span>
@@ -66,12 +67,12 @@ function IntegrationBadge({ name, abbr, color }: { name: string; abbr: string; c
       style={{
         display: 'flex', alignItems: 'center', gap: '10px',
         padding: '10px 16px', borderRadius: '12px',
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--color-bg-card)',
+        border: '1px solid var(--color-border-subtle)',
         cursor: 'default', transition: 'border-color 200ms ease',
       }}
       onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `${color}40` }}
-      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.08)' }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-border-subtle)' }}
     >
       <div style={{
         width: '28px', height: '28px', borderRadius: '8px', flexShrink: 0,
@@ -83,7 +84,7 @@ function IntegrationBadge({ name, abbr, color }: { name: string; abbr: string; c
       </div>
       <span style={{
         fontFamily: 'var(--font-body)', fontSize: '0.8125rem', fontWeight: 500,
-        color: 'rgba(255,255,255,0.65)', whiteSpace: 'nowrap',
+        color: 'var(--color-text-secondary)', whiteSpace: 'nowrap',
       }}>
         {name}
       </span>
@@ -96,7 +97,7 @@ export default function Integrations() {
     <section style={{
       background: 'var(--color-bg-secondary)',
       padding: 'clamp(5rem,8vw,8rem) clamp(1.5rem,5vw,4rem)',
-      borderTop: '1px solid rgba(255,255,255,0.06)',
+      borderTop: '1px solid var(--color-border-faint)',
     }}>
 
 
@@ -117,21 +118,21 @@ export default function Integrations() {
             }} />
             <span style={{
               fontFamily: 'var(--font-body)', fontSize: '0.6875rem', fontWeight: 700,
-              letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)',
+              letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-text-muted)',
             }}>
               Integrations
             </span>
           </div>
           <h2 style={{
             fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.75rem,3.5vw,2.75rem)',
-            fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.02em', color: '#FFFFFF',
+            fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.02em', color: 'var(--color-text-primary)',
             marginBottom: '0.75rem',
           }}>
             Powered by global cloud leaders
           </h2>
           <p style={{
             fontFamily: 'var(--font-body)', fontSize: '1rem', lineHeight: 1.65,
-            color: 'rgba(255,255,255,0.45)', maxWidth: '440px', margin: '0 auto',
+            color: 'var(--color-text-muted)', maxWidth: '440px', margin: '0 auto',
           }}>
             Concierto integrates natively with the platforms your teams already rely on.
           </p>
@@ -159,13 +160,13 @@ export default function Integrations() {
           style={{
             display: 'flex', flexWrap: 'wrap', gap: '10px',
             padding: '24px', borderRadius: '16px',
-            background: 'rgba(255,255,255,0.02)',
-            border: '1px solid rgba(255,255,255,0.06)',
+            background: 'var(--color-bg-glass-faint)',
+            border: '1px solid var(--color-border-faint)',
           }}
         >
           <span style={{
             width: '100%', fontFamily: 'var(--font-body)', fontSize: '0.75rem', fontWeight: 600,
-            letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)',
+            letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-text-faint)',
             marginBottom: '4px',
           }}>
             And many more integrations

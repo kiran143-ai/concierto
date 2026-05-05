@@ -207,7 +207,7 @@ function OrbitAnimation() {
         position: 'absolute', top: CY - 28, left: CX - 28,
         width: 56, height: 56, borderRadius: '14px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'rgba(10,10,18,0.85)', border: '1px solid rgba(255,255,255,0.12)',
+        background: 'var(--color-bg-elevated)', border: '1px solid var(--color-border-default)',
         animation: 'orbit-pulse 2.6s ease-in-out infinite',
         zIndex: 3,
       }}>
@@ -245,9 +245,10 @@ function BentoCard({ card, delay = 0 }: { card: typeof cards[0]; delay?: number 
         borderRadius: '20px',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
+        boxShadow: 'var(--shadow-card)',
         minHeight: card.size === 'large' ? '300px' : '220px',
         cursor: 'default',
-        transition: 'border-color 300ms ease, transform 300ms ease, background 300ms',
+        transition: 'border-color 300ms ease, transform 300ms ease, background 300ms, box-shadow 300ms',
       }}
       onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--color-bg-card-hover)' }}
       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'var(--color-bg-card)' }}

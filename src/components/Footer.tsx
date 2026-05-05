@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useTheme } from '../context/ThemeContext'
 
 const footerLinks = {
   Solutions: ['Modernize', 'Migrate', 'Manage', 'Maximize', 'Intelligence'],
@@ -8,6 +9,9 @@ const footerLinks = {
 }
 
 export default function Footer() {
+  const { theme } = useTheme()
+  const isLight = theme === 'light'
+
   return (
     <footer style={{
       background: 'var(--color-bg-primary)',
@@ -26,7 +30,11 @@ export default function Footer() {
               <img
                 src="/images/Concierto-Logo-inverse.svg"
                 alt="Concierto"
-                style={{ height: '36px', width: 'auto', display: 'block' }}
+                style={{
+                  height: '36px', width: 'auto', display: 'block',
+                  filter: isLight ? 'invert(1) brightness(0)' : 'none',
+                  transition: 'filter 300ms ease',
+                }}
               />
             </a>
 
@@ -43,7 +51,7 @@ export default function Footer() {
                 <motion.a
                   key={s}
                   href="#"
-                  whileHover={{ scale: 1.1, borderColor: 'rgba(255,255,255,0.2)' }}
+                  whileHover={{ scale: 1.1, borderColor: 'var(--color-border-hover)' }}
                   style={{
                     width: '32px', height: '32px', borderRadius: '8px',
                     border: '1px solid var(--color-border-subtle)',
@@ -74,7 +82,7 @@ export default function Footer() {
                 <motion.a
                   key={link}
                   href="#"
-                  whileHover={{ x: 2, color: '#FFFFFF' }}
+                  whileHover={{ x: 2 }}
                   style={{
                     fontFamily: 'var(--font-body)', fontSize: '0.875rem',
                     color: 'var(--color-text-muted)', textDecoration: 'none',
@@ -110,8 +118,8 @@ export default function Footer() {
                   color: 'var(--color-text-faint)', textDecoration: 'none',
                   transition: 'color 150ms ease',
                 }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.6)' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.25)' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--color-text-secondary)' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--color-text-faint)' }}
               >
                 {item}
               </a>

@@ -118,6 +118,7 @@ export default function MetricsSection() {
                 padding: '32px 28px', borderRadius: '20px',
                 background: 'var(--color-bg-card)',
                 border: `1px solid ${m.color}25`,
+                boxShadow: 'var(--shadow-card)',
                 transition: 'transform 300ms ease, box-shadow 300ms ease',
               }}
             >

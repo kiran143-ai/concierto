@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, X, Sun, Moon } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
 
 const navLinks = [
   { label: 'About Us', hasDropdown: false },
@@ -15,21 +16,49 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const { theme, toggleTheme } = useTheme()
+  const isLight = theme === 'light'
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    const onScroll = () => setScrolled(window.scrollY > 24)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const textColor = isLight ? '#4A5068' : 'rgba(255,255,255,0.62)'
+  const textColorActive = isLight ? '#0D0D1A' : '#FFFFFF'
+  const iconColor = isLight ? '#8890A8' : 'rgba(255,255,255,0.6)'
+  const mobileBtnBg = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.07)'
+  const mobileBtnBorder = isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.1)'
+
+  /* Light nav: solid white from the start; dark nav: transparent until scrolled */
+  const headerBg = isLight
+    ? 'rgba(255,255,255,0.97)'
+    : scrolled ? 'rgba(5,5,10,0.88)' : 'transparent'
+  const headerBorder = isLight
+    ? '1px solid rgba(0,0,0,0.08)'
+    : scrolled ? '1px solid rgba(255,255,255,0.07)' : '1px solid transparent'
+  const headerShadow = isLight
+    ? '0 1px 0 rgba(0,0,0,0.05), 0 4px 20px rgba(0,0,0,0.04)'
+    : scrolled ? '0 4px 32px rgba(0,0,0,0.4)' : 'none'
+
   return (
     <>
       <motion.header
+        data-nav-header=""
         initial={{ y: -72, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-0 left-0 right-0 z-[100]"
-        style={{ height: '64px' }}
+        style={{
+          height: '64px',
+          background: headerBg,
+          borderBottom: headerBorder,
+          boxShadow: headerShadow,
+          backdropFilter: isLight ? 'blur(20px)' : scrolled ? 'blur(20px)' : 'none',
+          WebkitBackdropFilter: isLight ? 'blur(20px)' : scrolled ? 'blur(20px)' : 'none',
+          transition: 'background 300ms ease, border-color 300ms ease, box-shadow 300ms ease',
+        }}
       >
         <div
           style={{
@@ -40,7 +69,6 @@ export default function Nav() {
             padding: '0 2.5rem',
             maxWidth: '1280px',
             margin: '0 auto',
-            transition: 'all 300ms ease',
           }}
         >
           {/* ── Logo ── */}
@@ -51,7 +79,11 @@ export default function Nav() {
             <img
               src="/images/Concierto-Logo-inverse.svg"
               alt="Concierto"
-              style={{ height: '42px', width: 'auto', display: 'block' }}
+              style={{
+                height: '42px', width: 'auto', display: 'block',
+                filter: isLight ? 'invert(1) brightness(0)' : 'none',
+                transition: 'filter 400ms ease',
+              }}
             />
           </a>
 
@@ -64,8 +96,8 @@ export default function Nav() {
                 gap: '2px',
                 padding: '6px 8px',
                 borderRadius: '9999px',
-                background: scrolled ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.09)',
-                border: '1px solid rgba(255,255,255,0.13)',
+                background: 'var(--color-nav-pill-bg)',
+                border: '1px solid var(--color-nav-pill-border)',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
                 transition: 'all 300ms ease',
@@ -81,12 +113,12 @@ export default function Nav() {
                   <button
                     style={{
                       display: 'flex', alignItems: 'center', gap: '5px',
-                      padding: '8px 16px', borderRadius: '9999px',
+                      padding: '8px 14px', borderRadius: '9999px',
                       border: 'none', cursor: 'pointer',
                       fontFamily: 'var(--font-body)',
                       fontSize: '0.875rem', fontWeight: 500,
-                      color: activeDropdown === link.label ? '#FFFFFF' : 'rgba(255,255,255,0.62)',
-                      background: activeDropdown === link.label ? 'rgba(255,255,255,0.1)' : 'transparent',
+                      color: activeDropdown === link.label ? textColorActive : textColor,
+                      background: activeDropdown === link.label ? 'var(--color-nav-btn-hover)' : 'transparent',
                       transition: 'all 180ms ease',
                       whiteSpace: 'nowrap',
                     }}
@@ -98,7 +130,7 @@ export default function Nav() {
                         style={{
                           transform: activeDropdown === link.label ? 'rotate(180deg)' : 'none',
                           transition: 'transform 200ms',
-                          opacity: 0.55,
+                          opacity: 0.5,
                         }}
                       />
                     )}
@@ -119,11 +151,13 @@ export default function Nav() {
                           minWidth: '220px',
                           padding: '8px',
                           borderRadius: '16px',
-                          background: 'rgba(8, 8, 14, 0.97)',
-                          border: '1px solid rgba(255,255,255,0.1)',
+                          background: 'var(--color-nav-dropdown-bg)',
+                          border: '1px solid var(--color-border-default)',
                           backdropFilter: 'blur(28px)',
                           WebkitBackdropFilter: 'blur(28px)',
-                          boxShadow: '0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)',
+                          boxShadow: isLight
+                            ? '0 8px 40px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.06)'
+                            : '0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)',
                         }}
                       >
                         {link.items?.map((item) => (
@@ -138,18 +172,18 @@ export default function Nav() {
                               fontFamily: 'var(--font-body)',
                               fontSize: '0.875rem',
                               fontWeight: 450,
-                              color: 'rgba(255,255,255,0.55)',
+                              color: 'var(--color-text-secondary)',
                               textDecoration: 'none',
                               transition: 'color 150ms ease, background 150ms ease',
                               letterSpacing: '0.01em',
                               whiteSpace: 'nowrap',
                             }}
                             onMouseEnter={e => {
-                              e.currentTarget.style.color = '#fff'
-                              e.currentTarget.style.background = 'rgba(255,255,255,0.07)'
+                              e.currentTarget.style.color = textColorActive
+                              e.currentTarget.style.background = 'var(--color-nav-btn-hover)'
                             }}
                             onMouseLeave={e => {
-                              e.currentTarget.style.color = 'rgba(255,255,255,0.55)'
+                              e.currentTarget.style.color = 'var(--color-text-secondary)'
                               e.currentTarget.style.background = 'transparent'
                             }}
                           >
@@ -165,8 +199,8 @@ export default function Nav() {
           </nav>
 
           {/* ── Right actions ── */}
-          <div className="flex items-center gap-2.5">
-            {/* Request a Brief — hidden on mobile, visible on desktop */}
+          <div className="flex items-center gap-2">
+            {/* Request a Brief — hidden on mobile */}
             <motion.a
               href="#"
               whileHover={{ scale: 1.04, boxShadow: '0 0 28px rgba(245,158,11,0.6)' }}
@@ -180,7 +214,7 @@ export default function Nav() {
                 background: '#F59E0B',
                 color: '#000000',
                 textDecoration: 'none',
-                boxShadow: '0 0 16px rgba(245,158,11,0.35)',
+                boxShadow: '0 0 16px rgba(245,158,11,0.3)',
                 transition: 'box-shadow 300ms ease',
                 letterSpacing: '-0.01em',
                 whiteSpace: 'nowrap',
@@ -189,10 +223,27 @@ export default function Nav() {
               Request a Brief
             </motion.a>
 
+            {/* Theme toggle */}
+            <button
+              onClick={toggleTheme}
+              aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
+              className="flex w-8 h-8 items-center justify-center rounded-full"
+              style={{
+                color: iconColor,
+                background: mobileBtnBg,
+                border: `1px solid ${mobileBtnBorder}`,
+                cursor: 'pointer',
+                transition: 'all 200ms ease',
+                flexShrink: 0,
+              }}
+            >
+              {isLight ? <Moon size={15} /> : <Sun size={15} />}
+            </button>
+
             {/* Mobile hamburger */}
             <button
               className="flex lg:hidden w-8 h-8 items-center justify-center rounded-full"
-              style={{ color: 'rgba(255,255,255,0.6)', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)' }}
+              style={{ color: iconColor, background: mobileBtnBg, border: `1px solid ${mobileBtnBorder}` }}
               onClick={() => setMobileOpen(v => !v)}
             >
               {mobileOpen ? <X size={16} /> : <Menu size={16} />}
@@ -211,14 +262,15 @@ export default function Nav() {
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className="fixed top-16 left-3 right-3 z-[99] rounded-2xl"
             style={{
-              background: 'rgba(5, 5, 12, 0.97)',
-              border: '1px solid rgba(255,255,255,0.1)',
+              background: 'var(--color-nav-mobile-bg)',
+              border: '1px solid var(--color-border-subtle)',
               backdropFilter: 'blur(24px)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.6)',
+              boxShadow: isLight
+                ? '0 8px 40px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.06)'
+                : '0 20px 60px rgba(0,0,0,0.6)',
               padding: '8px 12px 16px',
             }}
           >
-            {/* Nav links */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
               {navLinks.map((link, i) => (
                 <motion.a
@@ -235,17 +287,17 @@ export default function Nav() {
                     fontSize: '0.9375rem',
                     fontWeight: 500,
                     lineHeight: 1.4,
-                    color: 'rgba(255,255,255,0.7)',
+                    color: 'var(--color-text-secondary)',
                     textDecoration: 'none',
-                    borderBottom: i < navLinks.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                    borderBottom: i < navLinks.length - 1 ? '1px solid var(--color-border-faint)' : 'none',
                     transition: 'color 150ms ease, background 150ms ease',
                   }}
                   onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.color = '#fff'
-                    ;(e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)'
+                    (e.currentTarget as HTMLElement).style.color = textColorActive
+                    ;(e.currentTarget as HTMLElement).style.background = 'var(--color-nav-btn-hover)'
                   }}
                   onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.7)'
+                    (e.currentTarget as HTMLElement).style.color = 'var(--color-text-secondary)'
                     ;(e.currentTarget as HTMLElement).style.background = 'transparent'
                   }}
                   onClick={() => setMobileOpen(false)}
@@ -255,8 +307,7 @@ export default function Nav() {
               ))}
             </div>
 
-            {/* CTA buttons */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid var(--color-border-faint)' }}>
               <motion.a
                 href="#"
                 initial={{ opacity: 0 }}

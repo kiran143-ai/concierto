@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Play } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { useTheme } from '../context/ThemeContext'
 
 const DASHBOARD_SCREENS = ['/images/1.png', '/images/2.png', '/images/3.png']
 import FloatingLines from './FloatingLines'
@@ -28,67 +29,116 @@ const fadeUp = (delay = 0) => ({
 
 export default function Hero() {
   const [activeScreen, setActiveScreen] = useState(0)
+  const { theme } = useTheme()
+  const isLight = theme === 'light'
 
   useEffect(() => {
     const timer = setInterval(() => setActiveScreen(i => (i + 1) % DASHBOARD_SCREENS.length), 3500)
     return () => clearInterval(timer)
   }, [])
 
+  const sectionBg = isLight ? '#FFFFFF' : '#000000'
+  const pillCardBg = isLight ? 'transparent' : 'rgba(255,255,255,0.02)'
+  const pillCardHover = isLight ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.06)'
+  const pillCardBorder = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)'
+  const metricsBg = isLight ? '#FFFFFF' : 'rgba(10,10,18,0.7)'
+  const metricsBorder = isLight ? 'rgba(0,0,0,0.09)' : 'rgba(255,255,255,0.11)'
+  const metricsInset = isLight ? 'inset 0 1px 0 rgba(255,255,255,0.9)' : 'inset 0 1px 0 rgba(255,255,255,0.06)'
+  const eyebrowBg = isLight ? '#FEF3C7' : 'rgba(255,255,255,0.05)'
+  const eyebrowBorder = isLight ? 'rgba(245,158,11,0.3)' : 'rgba(255,255,255,0.12)'
+  const eyebrowText = isLight ? '#92400E' : 'rgba(255,255,255,0.6)'
+  const watchBtnColor = isLight ? '#4A5068' : 'rgba(255,255,255,0.75)'
+  const watchBtnBorder = isLight ? 'rgba(0,0,0,0.13)' : 'rgba(255,255,255,0.18)'
+  const watchBtnBg = isLight ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.05)'
+  const watchIconBg = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.1)'
+  const watchIconBorder = isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.15)'
+  const bottomFade = isLight
+    ? 'linear-gradient(to bottom, transparent 0%, #FFFFFF 100%)'
+    : 'linear-gradient(to bottom, transparent 0%, #000 100%)'
+  const statLabelColor = isLight ? '#8890A8' : 'rgba(255,255,255,0.45)'
+  const metricsShadow = isLight
+    ? `0 1px 3px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.07), ${metricsInset}`
+    : `0 4px 40px rgba(0,0,0,0.4), ${metricsInset}`
+  const getStartedBg = isLight ? '#0D0D1A' : '#FFFFFF'
+  const getStartedColor = isLight ? '#FFFFFF' : '#000000'
+
   return (
-    <section style={{ position: 'relative', width: '100%', overflow: 'hidden', background: '#000000' }}>
+    <section style={{ position: 'relative', width: '100%', overflow: 'hidden', background: sectionBg, transition: 'background 400ms ease' }}>
 
-      {/* FloatingLines — performance-optimised: 1× pixel ratio, 30fps, pauses when off-screen */}
-      <div aria-hidden="true" style={{
-        position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh',
-        zIndex: 0, opacity: 0.55, pointerEvents: 'none',
-      }}>
-        <FloatingLines
-          linesGradient={['#F59E0B', '#38BDF8', '#7C3AED']}
-          enabledWaves={['middle', 'bottom']}
-          lineCount={[6, 8]}
-          lineDistance={[5, 6]}
-          bendRadius={4.0}
-          bendStrength={-0.5}
-          animationSpeed={0.45}
-          interactive={false}
-          parallax={false}
-          mixBlendMode="screen"
-        />
-      </div>
+      {/* FloatingLines — dark mode only */}
+      {!isLight && (
+        <div aria-hidden="true" style={{
+          position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh',
+          zIndex: 0, opacity: 0.55, pointerEvents: 'none',
+        }}>
+          <FloatingLines
+            linesGradient={['#F59E0B', '#38BDF8', '#7C3AED']}
+            enabledWaves={['middle', 'bottom']}
+            lineCount={[6, 8]}
+            lineDistance={[5, 6]}
+            bendRadius={4.0}
+            bendStrength={-0.5}
+            animationSpeed={0.45}
+            interactive={false}
+            parallax={false}
+            mixBlendMode="screen"
+          />
+        </div>
+      )}
 
-      {/* Very subtle top-to-bottom darken — keeps text readable */}
-      <div aria-hidden="true" style={{
-        position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh',
-        zIndex: 1, pointerEvents: 'none',
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.75) 100%)',
-      }} />
+      {/* Light mode: subtle ambient gradient blobs instead of lines */}
+      {isLight && (
+        <div aria-hidden="true" style={{
+          position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh',
+          zIndex: 0, pointerEvents: 'none',
+        }}>
+          <div style={{
+            position: 'absolute', width: '600px', height: '400px',
+            top: '-100px', right: '-80px',
+            background: 'radial-gradient(ellipse, rgba(245,158,11,0.10) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+          }} />
+          <div style={{
+            position: 'absolute', width: '500px', height: '350px',
+            top: '20%', left: '-100px',
+            background: 'radial-gradient(ellipse, rgba(56,189,248,0.08) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+          }} />
+        </div>
+      )}
 
-      {/* Bottom hard fade to black */}
+      {/* Top-to-bottom overlay — dark mode only */}
+      {!isLight && (
+        <div aria-hidden="true" style={{
+          position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh',
+          zIndex: 1, pointerEvents: 'none',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0.75) 100%)',
+        }} />
+      )}
+
+      {/* Bottom hard fade */}
       <div aria-hidden="true" style={{
         position: 'absolute', top: 'calc(100vh - 180px)', left: 0, width: '100%', height: '180px',
         zIndex: 2, pointerEvents: 'none',
-        background: 'linear-gradient(to bottom, transparent 0%, #000 100%)',
+        background: bottomFade,
+        transition: 'background 400ms ease',
       }} />
 
-      {/* Subtle grid */}
-      <div aria-hidden="true" style={{
-        position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh',
-        zIndex: 3, pointerEvents: 'none',
-        backgroundImage: `
-          linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px)
-        `,
-        backgroundSize: '64px 64px',
-      }} />
+      {/* Subtle grid — dark mode only */}
+      {!isLight && (
+        <div aria-hidden="true" style={{
+          position: 'absolute', top: 0, left: 0, width: '100%', height: '100vh',
+          zIndex: 3, pointerEvents: 'none',
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px)`,
+          backgroundSize: '64px 64px',
+        }} />
+      )}
 
       {/* ── 1. Hero text + CTAs ── */}
       <div style={{
-        position: 'relative',
-        zIndex: 20,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
+        position: 'relative', zIndex: 20,
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', textAlign: 'center',
         paddingTop: 'calc(64px + 2.5rem)',
         paddingLeft: 'clamp(1.5rem, 5vw, 4rem)',
         paddingRight: 'clamp(1.5rem, 5vw, 4rem)',
@@ -101,10 +151,11 @@ export default function Hero() {
             padding: '6px 18px', borderRadius: '9999px',
             fontFamily: 'var(--font-body)', fontSize: '0.75rem', fontWeight: 600,
             letterSpacing: '0.1em', textTransform: 'uppercase',
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(255,255,255,0.12)',
-            color: 'rgba(255,255,255,0.6)',
+            background: eyebrowBg,
+            border: `1px solid ${eyebrowBorder}`,
+            color: eyebrowText,
             backdropFilter: 'blur(8px)',
+            transition: 'all 400ms ease',
           }}>
             <span style={{
               width: '6px', height: '6px', borderRadius: '50%', flexShrink: 0,
@@ -120,7 +171,7 @@ export default function Hero() {
           fontFamily: 'var(--font-heading)',
           fontSize: 'clamp(2rem, 3.5vw, 3.25rem)',
           fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.025em',
-          color: '#FFFFFF', marginBottom: 0, maxWidth: '780px',
+          color: 'var(--color-text-primary)', marginBottom: 0, maxWidth: '780px',
         }}>
           Unified Platform for Accelerated Business Transformation
         </motion.h1>
@@ -130,13 +181,13 @@ export default function Hero() {
           fontFamily: 'var(--font-body)',
           fontSize: 'clamp(0.9rem, 1.4vw, 1.05rem)',
           fontWeight: 500, lineHeight: 1.7,
-          color: 'rgba(255,255,255,0.55)',
+          color: 'var(--color-text-secondary)',
           marginBottom: '1.5rem', letterSpacing: '0.01em',
         }}>
           Multi-Cloud &nbsp;·&nbsp; Multi-Lingual &nbsp;·&nbsp; AI-Powered
         </motion.p>
 
-        {/* Request a Brief — mobile only, shown below heading */}
+        {/* Request a Brief — mobile only */}
         <motion.div {...fadeUp(0.18)} className="flex lg:hidden" style={{ marginBottom: '2rem' }}>
           <a
             href="#"
@@ -153,10 +204,9 @@ export default function Hero() {
             Request a Brief
           </a>
         </motion.div>
-
       </div>
 
-      {/* ── 2. 5M Pillar strip — directly under CTAs ── */}
+      {/* ── 2. 5M Pillar strip ── */}
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         animate={{ opacity: 1, y: 0 }}
@@ -173,13 +223,13 @@ export default function Hero() {
             fontFamily: 'var(--font-heading)',
             fontSize: 'clamp(1.35rem, 2.5vw, 2rem)',
             fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.02em',
-            color: '#FFFFFF', marginBottom: '0.6rem',
+            color: 'var(--color-text-primary)', marginBottom: '0.6rem',
           }}>
             One Platform. Every Transformation Stage.
           </h2>
           <p style={{
             fontFamily: 'var(--font-body)', fontSize: '0.9375rem', lineHeight: 1.65,
-            color: 'rgba(255,255,255,0.45)', maxWidth: '560px', margin: '0 auto',
+            color: 'var(--color-text-muted)', maxWidth: '560px', margin: '0 auto',
           }}>
             Concierto is the unified platform that dramatically accelerates your complete enterprise
             transformation while saving time, effort, and cost compared to legacy tools and approaches.
@@ -191,11 +241,11 @@ export default function Hero() {
           {pillars.map((p, i) => (
             <motion.div
               key={p.id}
-              whileHover={{ background: 'rgba(255,255,255,0.06)' }}
+              whileHover={{ background: pillCardHover }}
               className="hero-pillar-card"
               style={{
-                background: 'rgba(255,255,255,0.02)',
-                borderRight: i < pillars.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
+                background: pillCardBg,
+                borderRight: i < pillars.length - 1 ? `1px solid ${pillCardBorder}` : 'none',
                 display: 'flex', flexDirection: 'column', gap: '12px',
                 cursor: 'pointer', transition: 'background 250ms ease',
               }}
@@ -207,9 +257,7 @@ export default function Hero() {
               }}>
                 {p.label}
               </span>
-              <p className="hero-pillar-title" style={{
-                fontFamily: 'var(--font-heading)',
-              }}>
+              <p className="hero-pillar-title" style={{ fontFamily: 'var(--font-heading)' }}>
                 {p.title}
               </p>
               <a
@@ -234,7 +282,7 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* CTAs — below pillar cards */}
+        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -249,9 +297,10 @@ export default function Hero() {
               display: 'inline-flex', alignItems: 'center', gap: '8px',
               padding: '14px 32px', borderRadius: '9999px',
               fontFamily: 'var(--font-body)', fontSize: '0.9375rem', fontWeight: 600,
-              background: '#FFFFFF', color: '#000000',
-              boxShadow: '0 0 32px rgba(255,255,255,0.14)',
+              background: getStartedBg, color: getStartedColor,
+              boxShadow: isLight ? '0 4px 20px rgba(0,0,0,0.15)' : '0 0 32px rgba(255,255,255,0.14)',
               letterSpacing: '-0.01em', textDecoration: 'none',
+              transition: 'background 400ms ease, color 400ms ease, box-shadow 400ms ease',
             }}
           >
             Get Started <ArrowRight size={15} />
@@ -263,15 +312,16 @@ export default function Hero() {
               display: 'inline-flex', alignItems: 'center', gap: '10px',
               padding: '14px 28px', borderRadius: '9999px',
               fontFamily: 'var(--font-body)', fontSize: '0.9375rem', fontWeight: 500,
-              color: 'rgba(255,255,255,0.75)',
-              border: '1px solid rgba(255,255,255,0.18)',
-              background: 'rgba(255,255,255,0.05)',
+              color: watchBtnColor,
+              border: `1px solid ${watchBtnBorder}`,
+              background: watchBtnBg,
               backdropFilter: 'blur(8px)', textDecoration: 'none',
+              transition: 'all 400ms ease',
             }}
           >
             <span style={{
               width: '28px', height: '28px', borderRadius: '50%', flexShrink: 0,
-              background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)',
+              background: watchIconBg, border: `1px solid ${watchIconBorder}`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               <Play size={10} fill="currentColor" style={{ marginLeft: '2px' }} />
@@ -330,7 +380,13 @@ export default function Hero() {
               <img src={icon.src} alt="" style={{ width: '64px', height: '64px', objectFit: 'contain', filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))' }} />
             </motion.div>
           ))}
-          <div style={{ position: 'relative', width: '100%', overflow: 'hidden', borderRadius: '14px 14px 0 0', boxShadow: '0 0 0 1px rgba(255,255,255,0.07), 0 -4px 60px rgba(245,158,11,0.07), 0 40px 80px rgba(0,0,0,0.6)' }}>
+          <div style={{
+            position: 'relative', width: '100%', overflow: 'hidden',
+            borderRadius: '14px 14px 0 0',
+            boxShadow: isLight
+              ? '0 0 0 1px rgba(0,0,0,0.08), 0 -4px 40px rgba(245,158,11,0.07), 0 20px 60px rgba(0,0,0,0.15)'
+              : '0 0 0 1px rgba(255,255,255,0.07), 0 -4px 60px rgba(245,158,11,0.07), 0 40px 80px rgba(0,0,0,0.6)',
+          }}>
             <AnimatePresence mode="wait">
               <motion.img
                 key={activeScreen}
@@ -346,14 +402,18 @@ export default function Hero() {
             {/* dot indicators */}
             <div style={{ position: 'absolute', bottom: 14, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8 }}>
               {DASHBOARD_SCREENS.map((_, i) => (
-                <div key={i} style={{ width: i === activeScreen ? 20 : 8, height: 8, borderRadius: 4, background: i === activeScreen ? '#F59E0B' : 'rgba(255,255,255,0.35)', transition: 'all 0.4s ease' }} />
+                <div key={i} style={{
+                  width: i === activeScreen ? 20 : 8, height: 8, borderRadius: 4,
+                  background: i === activeScreen ? '#F59E0B' : (isLight ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.35)'),
+                  transition: 'all 0.4s ease',
+                }} />
               ))}
             </div>
           </div>
         </motion.div>
       </motion.div>
 
-      {/* ── 4. Metrics bar — under dashboard ── */}
+      {/* ── 4. Metrics bar ── */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -367,17 +427,18 @@ export default function Hero() {
         <div className="hero-metrics-grid" style={{
           width: '100%', maxWidth: '780px',
           borderRadius: '16px',
-          border: '1px solid rgba(255,255,255,0.11)',
+          border: `1px solid ${metricsBorder}`,
           overflow: 'hidden',
-          background: 'rgba(10,10,18,0.7)',
+          background: metricsBg,
           backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
-          boxShadow: '0 4px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
+          boxShadow: metricsShadow,
+          transition: 'all 400ms ease',
         }}>
           {stats.map((stat, i) => (
             <div key={stat.label} style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center',
               justifyContent: 'center', padding: '28px 20px', gap: '6px',
-              borderRight: i < stats.length - 1 ? '1px solid rgba(255,255,255,0.08)' : 'none',
+              borderRight: i < stats.length - 1 ? `1px solid ${metricsBorder}` : 'none',
               position: 'relative',
             }}>
               <div style={{
@@ -395,8 +456,9 @@ export default function Hero() {
               </span>
               <span style={{
                 fontFamily: 'var(--font-body)', fontSize: '0.75rem', fontWeight: 500,
-                lineHeight: 1.3, color: 'rgba(255,255,255,0.45)',
+                lineHeight: 1.3, color: statLabelColor,
                 textAlign: 'center', letterSpacing: '0.01em', position: 'relative',
+                transition: 'color 400ms ease',
               }}>
                 {stat.label}
               </span>

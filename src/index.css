@@ -67,6 +67,17 @@
   --glow-amber: 0 0 80px rgba(245,158,11,0.25);
   --glow-blue:  0 0 80px rgba(56,189,248,0.2);
 
+  /* Nav pill */
+  --color-nav-pill-bg: rgba(255,255,255,0.09);
+  --color-nav-pill-border: rgba(255,255,255,0.13);
+  --color-nav-btn-hover: rgba(255,255,255,0.10);
+  --color-nav-dropdown-bg: rgba(8,8,14,0.97);
+  --color-nav-mobile-bg: rgba(5,5,12,0.97);
+
+  /* Extra glass bg */
+  --color-bg-glass-faint: rgba(255,255,255,0.02);
+  --color-bg-glass: rgba(255,255,255,0.07);
+
   /* Nav */
   --nav-height: 64px;
 
@@ -78,27 +89,46 @@
 
 /* Light theme overrides */
 .light {
-  --color-bg-primary:    #F8F8FC;
-  --color-bg-secondary:  #EEEEF6;
-  --color-bg-elevated:   #E4E4F0;
-  --color-bg-card:       rgba(0, 0, 0, 0.03);
-  --color-bg-card-hover: rgba(0, 0, 0, 0.055);
-  --color-bg-overlay:    rgba(248, 248, 252, 0.92);
+  /* Pure white backgrounds — clean, airy, elevated */
+  --color-bg-primary:    #FFFFFF;
+  --color-bg-secondary:  #F5F6FA;
+  --color-bg-elevated:   #ECECF4;
+  --color-bg-card:       #FFFFFF;
+  --color-bg-card-hover: #FAFAFE;
+  --color-bg-overlay:    rgba(255, 255, 255, 0.98);
 
-  --color-text-primary:   #0A0A14;
-  --color-text-secondary: rgba(10,10,20,0.7);
-  --color-text-muted:     rgba(10,10,20,0.45);
-  --color-text-faint:     rgba(10,10,20,0.25);
+  /* Clear text hierarchy */
+  --color-text-primary:   #0D0D1A;
+  --color-text-secondary: #4A5068;
+  --color-text-muted:     #8890A8;
+  --color-text-faint:     #B8BDCE;
 
+  /* Visible but subtle borders */
   --color-border-faint:   rgba(0, 0, 0, 0.06);
-  --color-border-subtle:  rgba(0, 0, 0, 0.08);
-  --color-border-default: rgba(0, 0, 0, 0.12);
-  --color-border-hover:   rgba(0, 0, 0, 0.18);
+  --color-border-subtle:  rgba(0, 0, 0, 0.09);
+  --color-border-default: rgba(0, 0, 0, 0.13);
+  --color-border-hover:   rgba(0, 0, 0, 0.22);
 
-  --color-amber-glow: rgba(245, 158, 11, 0.2);
-  --color-blue-glow:  rgba(56, 189, 248, 0.15);
-  --glow-amber: 0 0 80px rgba(245,158,11,0.15);
-  --glow-blue:  0 0 80px rgba(56,189,248,0.12);
+  /* Nav — solid white with definition */
+  --color-nav-pill-bg: rgba(0,0,0,0.04);
+  --color-nav-pill-border: rgba(0,0,0,0.09);
+  --color-nav-btn-hover: rgba(0,0,0,0.05);
+  --color-nav-dropdown-bg: #FFFFFF;
+  --color-nav-mobile-bg: #FFFFFF;
+
+  /* Glass bg — barely tinted */
+  --color-bg-glass-faint: rgba(0,0,0,0.02);
+  --color-bg-glass: rgba(0,0,0,0.04);
+
+  /* Real card elevation */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 6px 24px rgba(0,0,0,0.07);
+  --shadow-card-hover: 0 4px 32px rgba(0,0,0,0.11), 0 1px 4px rgba(0,0,0,0.05);
+  --shadow-nav: 0 1px 0 rgba(0,0,0,0.08), 0 2px 16px rgba(0,0,0,0.05);
+
+  --color-amber-glow: rgba(245, 158, 11, 0.18);
+  --color-blue-glow:  rgba(56, 189, 248, 0.12);
+  --glow-amber: 0 0 60px rgba(245,158,11,0.12);
+  --glow-blue:  0 0 60px rgba(56,189,248,0.10);
 }
 
 /* ─── Global Reset & Base ──────────────────────────────────────── */
@@ -282,12 +312,53 @@ section, footer, header { overflow-x: hidden; }
 .hero-pillar-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid var(--color-border-subtle);
   border-radius: 20px;
   overflow: hidden;
-  background: rgba(0,0,0,0.4);
+  background: var(--color-bg-glass-faint);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
+}
+.light .hero-pillar-grid {
+  background: #FFFFFF;
+  box-shadow: var(--shadow-card);
+}
+
+/* ─── Light mode card elevation ───────────────────────────────── */
+.light .metrics-grid > *,
+.light .testimonials-grid > *,
+.light .bento-grid > * {
+  box-shadow: var(--shadow-card) !important;
+  background: #FFFFFF !important;
+}
+.light .metrics-grid > *:hover,
+.light .testimonials-grid > *:hover,
+.light .bento-grid > *:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+}
+
+/* ─── Light mode nav ───────────────────────────────────────────── */
+.light [data-nav-header] {
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.05), 0 4px 20px rgba(0,0,0,0.04);
+}
+
+/* ─── Light mode feature tab container ────────────────────────── */
+.light .feature-tab-outer {
+  background: #FFFFFF;
+  box-shadow: var(--shadow-card);
+}
+.light .feature-tab-sidebar {
+  background: #F5F6FA;
+}
+
+/* ─── Light mode integrations ──────────────────────────────────── */
+.light .cloud-partners-row > * {
+  box-shadow: var(--shadow-card) !important;
+  background: #FFFFFF !important;
 }
 @media (max-width: 900px) {
   .hero-pillar-grid { grid-template-columns: repeat(3, 1fr); }
@@ -505,7 +576,7 @@ section, footer, header { overflow-x: hidden; }
   font-size: 0.9375rem;
   font-weight: 700;
   line-height: 1.3;
-  color: #FFFFFF;
+  color: var(--color-text-primary);
   margin: 0;
   flex: 1;
 }

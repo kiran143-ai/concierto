@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { MotionConfig } from 'framer-motion'
+import { ThemeProvider } from './context/ThemeContext'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 
@@ -20,6 +21,7 @@ const Fallback = ({ h = 120 }: { h?: number }) => (
 
 function App() {
   return (
+    <ThemeProvider>
     <MotionConfig reducedMotion="user">
       <div style={{ background: 'var(--color-bg-primary)', minHeight: '100vh' }}>
         {/* Above-fold — eager */}
@@ -60,6 +62,7 @@ function App() {
         </Suspense>
       </div>
     </MotionConfig>
+    </ThemeProvider>
   )
 }
 

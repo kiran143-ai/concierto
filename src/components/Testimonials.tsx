@@ -86,8 +86,9 @@ export default function Testimonials() {
                 background: 'var(--color-bg-card)',
                 border: '1px solid var(--color-border-subtle)',
                 backdropFilter: 'blur(12px)',
+                boxShadow: 'var(--shadow-card)',
                 display: 'flex', flexDirection: 'column', gap: '20px',
-                transition: 'transform 300ms ease',
+                transition: 'transform 300ms ease, box-shadow 300ms ease',
               }}
             >
               {/* Subtle top accent */}
